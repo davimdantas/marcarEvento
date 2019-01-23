@@ -1,0 +1,29 @@
+<mat-table [dataSource]="dataSource">
+  <ng-container *ngFor="let column of columnArray" [cdkColumnDef]="column.columnDef">
+    <mat-header-cell *cdkHeaderCellDef>{{ column.header }}</mat-header-cell>
+
+    <mat-cell *matCellDef="let day">{{column.cell(day)}}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="generatedDays"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: generatedDays;"></mat-row>
+</mat-table>
+
+<br>
+<br>
+
+<app-select-date [firstDay]="firstDate" [lastDay]="lastDate" (clicked)="updateDays($event)"></app-select-date>
+
+<!-- generatedDays
+<br>
+{{generatedDays | json }}
+<br>
+<br>
+calendarArray
+<br>
+{{calendarArray | json }}
+<br>
+<br>
+columnArray
+<br>
+{{columnArray | json }} -->
