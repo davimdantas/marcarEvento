@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { DefinyInterval } from '../definyInterval.service';
 
 @Component({
   selector: 'app-select-date',
@@ -7,11 +8,13 @@ import { NgbDate, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-boot
   styleUrls: ['./select-date.component.css']
 })
 export class SelectDateComponent implements OnInit {
-  @Output() clicked = new EventEmitter();
+  //   @Output() clicked = new EventEmitter();
   hoveredDate: NgbDate;
   fromDate: NgbDate;
   toDate: NgbDate;
+
   @Input() firstDay;
+
   dateArray: [NgbDate, NgbDate, string, string, number[]] = [
     this.fromDate,
     this.toDate,
@@ -50,7 +53,11 @@ export class SelectDateComponent implements OnInit {
     }
   }
 
-  constructor(config: NgbDatepickerConfig, calendar: NgbCalendar) {
+  constructor(
+    config: NgbDatepickerConfig,
+    calendar: NgbCalendar,
+    public definyInterval: DefinyInterval
+  ) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 25);
     config.outsideDays = 'hidden';
@@ -100,7 +107,8 @@ export class SelectDateComponent implements OnInit {
 
   updateDates() {
     this.gerarArrayDiasDasemana();
-    this.clicked.emit(this.dateArray);
+    // this.clicked.emit(this.dateArray);
+    this.definyInterval.addChanges(this.dateArray);
   }
 
   ngOnInit() {

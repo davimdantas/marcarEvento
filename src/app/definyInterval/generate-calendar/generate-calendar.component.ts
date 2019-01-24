@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgbDate, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { DefinyInterval } from '../definyInterval.service';
 
 @Component({
   selector: 'app-generate-calendar',
@@ -121,7 +122,7 @@ export class GenerateCalendarComponent implements OnInit {
     return hours;
   }
 
-  constructor() {}
+  constructor(public definyInterval: DefinyInterval) {}
 
   ngOnInit() {
     this.getDates(
@@ -131,5 +132,10 @@ export class GenerateCalendarComponent implements OnInit {
     this.calendarGenerator(this.firstHour, this.lastHour);
     this.columnArray.map(day => this.generatedDays.push(day.columnDef));
     this.dataSource = this.daysForTable.pipe(map(v => Object.values(v)));
+    this.definyInterval
+      .getIntervalUpdateListener()
+      .subscribe((teste: [NgbDate, NgbDate, string, string, number[]]) => {
+        this.updateDays(teste);
+      });
   }
 }

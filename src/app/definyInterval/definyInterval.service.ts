@@ -1,19 +1,25 @@
-// import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { EventEmitter } from '@angular/core';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs';
 
-// export class DefinyInterval {
-//   private changes: [NgbDate, NgbDate, string, string, number[]];
+export class DefinyInterval {
+  private changes: [NgbDate, NgbDate, string, string, number[]];
+  private intervalUpdated = new Subject();
 
-//   getInterval() {
-//     return [...this.changes];
-//   }
+  getInterval() {
+    return [...this.changes];
+  }
+  getIntervalUpdateListener() {
+    return this.intervalUpdated.asObservable();
+  }
 
-//   addChanges(interval: [NgbDate, NgbDate, string, string, number[]]) {
-//     const begginerDate = interval[0];
-//     const endDate = interval[1];
-//     const firsth = interval[2];
-//     const lasth = interval[3];
-//     const wdays = interval[4];
-
-//     this.changes = [begginerDate, endDate, firsth, lasth, wdays];
-//   }
-// }
+  addChanges(interval: [NgbDate, NgbDate, string, string, number[]]) {
+    const begginerDate = interval[0];
+    const endDate = interval[1];
+    const firsth = interval[2];
+    const lasth = interval[3];
+    const wdays = interval[4];
+    this.changes = [begginerDate, endDate, firsth, lasth, wdays];
+    this.intervalUpdated.next(this.changes);
+  }
+}
