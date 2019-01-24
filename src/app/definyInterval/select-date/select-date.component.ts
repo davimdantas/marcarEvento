@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { DefinyInterval } from '../definyInterval.service';
 
@@ -8,7 +8,6 @@ import { DefinyInterval } from '../definyInterval.service';
   styleUrls: ['./select-date.component.css']
 })
 export class SelectDateComponent implements OnInit {
-  //   @Output() clicked = new EventEmitter();
   hoveredDate: NgbDate;
   fromDate: NgbDate;
   toDate: NgbDate;
@@ -107,7 +106,6 @@ export class SelectDateComponent implements OnInit {
 
   updateDates() {
     this.gerarArrayDiasDasemana();
-    // this.clicked.emit(this.dateArray);
     this.definyInterval.addChanges(this.dateArray);
   }
 

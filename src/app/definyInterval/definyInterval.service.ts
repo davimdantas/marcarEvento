@@ -6,9 +6,6 @@ export class DefinyInterval {
   private changes: [NgbDate, NgbDate, string, string, number[]];
   private intervalUpdated = new Subject();
 
-  getInterval() {
-    return [...this.changes];
-  }
   getIntervalUpdateListener() {
     return this.intervalUpdated.asObservable();
   }
