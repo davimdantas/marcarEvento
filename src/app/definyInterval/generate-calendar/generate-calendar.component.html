@@ -2,17 +2,17 @@
   <ng-container *ngFor="let column of columnArray" [cdkColumnDef]="column.columnDef">
     <mat-header-cell *cdkHeaderCellDef>{{ column.header }}</mat-header-cell>
 
-    <mat-cell *matCellDef="let day">{{column.cell(day)}}</mat-cell>
+    <mat-cell *matCellDef="let day">{{ column.cell(day) }}</mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="generatedDays"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: generatedDays;"></mat-row>
+  <mat-row *matRowDef="let row; columns: generatedDays"></mat-row>
 </mat-table>
 
-<br>
-<br>
+<br />
+<br />
 
-<app-select-date [firstDay]="firstDate" [lastDay]="lastDate" (clicked)="updateDays($event)"></app-select-date>
+<app-select-date [firstDay]="firstDate" (clicked)="updateDays($event)"></app-select-date>
 
 <!-- generatedDays
 <br>

@@ -1,68 +1,49 @@
-import { Component, OnInit, EventEmitter, Input, Output } from "@angular/core";
-import {
-  NgbDate,
-  NgbCalendar,
-  NgbDatepickerConfig
-} from "@ng-bootstrap/ng-bootstrap";
-import { MatCheckboxModule } from "@angular/material/checkbox";
-
-class ChangesForTable {
-  constructor(
-    public horaI: string,
-    public horaF: string,
-    public diasDaSemana: []
-  ) {}
-}
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { NgbDate, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: "app-select-date",
-  templateUrl: "./select-date.component.html",
-  styleUrls: ["./select-date.component.css"]
+  selector: 'app-select-date',
+  templateUrl: './select-date.component.html',
+  styleUrls: ['./select-date.component.css']
 })
 export class SelectDateComponent implements OnInit {
   @Output() clicked = new EventEmitter();
   hoveredDate: NgbDate;
-
   fromDate: NgbDate;
   toDate: NgbDate;
-
   @Input() firstDay;
-
-  @Input() lastDay;
-
-  dateArray = [];
+  dateArray: [NgbDate, NgbDate, string, string, number[]] = [
+    this.fromDate,
+    this.toDate,
+    '08:00',
+    '17:00',
+    [0, 1, 2, 3, 4, 5, 6]
+  ];
 
   submitted = false;
 
-  mudancas = new ChangesForTable("", "", []);
-
   checked = false;
   indeterminate = false;
-  labelPosition = "after";
+  labelPosition = 'after';
   disabled = false;
 
   diasDasemana = {
     domingo: true,
-
     segunda: true,
-
     terca: true,
     quarta: true,
     quinta: true,
-
     sexta: true,
     sabado: true
   };
 
-  arrayDiasDasemana = [];
-
   gerarArrayDiasDasemana() {
-    this.arrayDiasDasemana = [];
+    this.dateArray[4] = [];
     let contador = 0;
     for (const i in this.diasDasemana) {
       if (this.diasDasemana.hasOwnProperty(i)) {
         if (this.diasDasemana[i] === true) {
-          this.arrayDiasDasemana.push(contador);
+          this.dateArray[4].push(contador);
         }
         contador += 1;
       }
@@ -71,22 +52,13 @@ export class SelectDateComponent implements OnInit {
 
   constructor(config: NgbDatepickerConfig, calendar: NgbCalendar) {
     this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), "d", 10);
-    config.outsideDays = "hidden";
-    // console.log('\n Antes: ', this.fromDate, ' | ', this.toDate);
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 25);
+    config.outsideDays = 'hidden';
   }
 
   onSubmit() {
     this.submitted = true;
   }
-  saveHour(hour) {
-    console.log("\n aqui ", hour);
-  }
-
-  getCurrentModel() {
-    return JSON.stringify(this.mudancas);
-  }
-
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
@@ -97,10 +69,9 @@ export class SelectDateComponent implements OnInit {
       this.fromDate = date;
     }
 
-    this.dateArray = [];
     if (this.toDate && this.fromDate) {
-      console.log("\n fromDate", this.fromDate);
-      this.dateArray.push(this.fromDate, this.toDate);
+      this.dateArray[0] = this.fromDate;
+      this.dateArray[1] = this.toDate;
     }
   }
 
@@ -129,9 +100,6 @@ export class SelectDateComponent implements OnInit {
 
   updateDates() {
     this.gerarArrayDiasDasemana();
-    this.dateArray[2] = this.mudancas.horaI;
-    this.dateArray[3] = this.mudancas.horaF;
-    this.dateArray[4] = this.arrayDiasDasemana;
     this.clicked.emit(this.dateArray);
   }
 

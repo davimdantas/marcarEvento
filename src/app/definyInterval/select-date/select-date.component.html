@@ -1,0 +1,83 @@
+<mat-divider></mat-divider>
+<mat-card>
+  <mat-card>
+    <h3 md-title>Selecione o periodo disponível para o evento</h3>
+
+    <ngb-datepicker
+      #dp
+      (select)="onDateSelection($event)"
+      [firstDayOfWeek]="7"
+      [displayMonths]="2"
+      [dayTemplate]="t"
+      [minDate]="firstDay"
+    >
+    </ngb-datepicker>
+
+    <ng-template #t let-date let-focused="focused">
+      <span
+        class="custom-day"
+        [class.focused]="focused"
+        [class.range]="isRange(date)"
+        [class.faded]="isHovered(date) || isInside(date)"
+        (mouseenter)="hoveredDate = date"
+        (mouseleave)="hoveredDate = null"
+      >
+        {{ date.day }}
+      </span>
+    </ng-template>
+  </mat-card>
+  <mat-card>
+    <mat-form-field style="width:100px">
+      <input
+        matInput
+        type="time"
+        placeholder="Hora inicial"
+        style="width:100px"
+        name="horaI"
+        [(ngModel)]="dateArray['2']"
+      />
+    </mat-form-field>
+    <mat-form-field style="width:100px">
+      <input
+        matInput
+        type="time"
+        placeholder="Hora Final"
+        style="width:100px"
+        name="horaF"
+        [(ngModel)]="dateArray['3']"
+      />
+    </mat-form-field>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      <h2 class="example-h2">Dias da semana</h2>
+
+      <section class="example-section">
+        <mat-checkbox class="example-margin" checked [(ngModel)]="diasDasemana.domingo"
+          >Domingo</mat-checkbox
+        >
+        <mat-checkbox class="example-margin" checked [(ngModel)]="diasDasemana.segunda"
+          >Segunda</mat-checkbox
+        >
+        <mat-checkbox class="example-margin" checked [(ngModel)]="diasDasemana.terca"
+          >Terça</mat-checkbox
+        >
+        <mat-checkbox class="example-margin" checked [(ngModel)]="diasDasemana.quarta"
+          >Quarta</mat-checkbox
+        >
+        <mat-checkbox class="example-margin" checked [(ngModel)]="diasDasemana.quinta"
+          >Quinta</mat-checkbox
+        >
+        <mat-checkbox class="example-margin" checked [(ngModel)]="diasDasemana.sexta"
+          >Sexta</mat-checkbox
+        >
+        <mat-checkbox class="example-margin" checked [(ngModel)]="diasDasemana.sabado"
+          >Sabado</mat-checkbox
+        >
+      </section>
+    </mat-card-content>
+  </mat-card>
+
+  <button mat-raised-button (click)="updateDates()">Enviar mudanças</button>
+</mat-card>
