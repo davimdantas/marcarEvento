@@ -121,9 +121,7 @@ export class GenerateCalendarComponent implements OnInit {
     return hours;
   }
 
-  constructor(public definyinterval: [NgbDate, NgbDate, string, string, number[]]) {
-    thi;
-  }
+  constructor() {}
 
   ngOnInit() {
     this.getDates(
