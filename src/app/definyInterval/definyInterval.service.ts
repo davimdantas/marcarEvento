@@ -16,7 +16,8 @@ export class DefinyInterval {
     const firsth = interval[2];
     const lasth = interval[3];
     const wdays = interval[4];
-    this.changes = [begginerDate, endDate, firsth, lasth, wdays];
+    this.changes = [...interval];
+    // this.changes = [begginerDate, endDate, firsth, lasth, wdays];
     this.intervalUpdated.next(this.changes);
   }
 }
