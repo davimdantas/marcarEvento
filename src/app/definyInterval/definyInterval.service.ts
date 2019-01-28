@@ -11,13 +11,13 @@ export class DefinyInterval {
   }
 
   addChanges(interval: [NgbDate, NgbDate, string, string, number[]]) {
-    // const begginerDate = interval[0];
-    // const endDate = interval[1];
-    // const firsth = interval[2];
-    // const lasth = interval[3];
-    // const wdays = interval[4];
-    // this.changes = [begginerDate, endDate, firsth, lasth, wdays];
-    this.changes = [...interval];
+    const begginerDate = interval[0];
+    const endDate = interval[1];
+    const firsth = interval[2];
+    const lasth = interval[3];
+    const wdays = interval[4];
+    this.changes = [begginerDate, endDate, firsth, lasth, wdays];
+    // this.changes = [...interval];
     this.intervalUpdated.next(this.changes);
   }
 }
