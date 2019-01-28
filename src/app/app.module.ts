@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SelectDateComponent } from './definyInterval/select-date/select-date.component';
 import { GenerateCalendarComponent } from './definyInterval/generate-calendar/generate-calendar.component';
@@ -18,9 +18,10 @@ import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { DefinyInterval } from './definyInterval/definyInterval.service';
+import { StartViewComponent } from './definyDate/start-view/start-view.component';
 
 @NgModule({
-  declarations: [AppComponent, SelectDateComponent, GenerateCalendarComponent],
+  declarations: [AppComponent, SelectDateComponent, GenerateCalendarComponent, StartViewComponent],
   imports: [
     BrowserModule,
     // NxModule.forRoot(),
@@ -36,7 +37,8 @@ import { DefinyInterval } from './definyInterval/definyInterval.service';
     NgbModule,
     FormsModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    HttpClientModule
   ],
   exports: [MatCheckboxModule, MatRadioModule],
   providers: [MatDatepickerModule, DefinyInterval],
