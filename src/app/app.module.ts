@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { SelectDateComponent } from './definyInterval/select-date/select-date.component';
 import { GenerateCalendarComponent } from './definyInterval/generate-calendar/generate-calendar.component';
 // import { NxModule } from '@nrwl/nx';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '../../libs/material/src/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -19,13 +19,19 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { DefinyInterval } from './definyInterval/definyInterval.service';
 import { StartViewComponent } from './definyDate/start-view/start-view.component';
+// import { AppRoutingModule } from './app-routing.module';
+
+const appRoutes: Routes = [
+  { path: '', component: GenerateCalendarComponent },
+  { path: 'startview', component: StartViewComponent }
+];
 
 @NgModule({
   declarations: [AppComponent, SelectDateComponent, GenerateCalendarComponent, StartViewComponent],
   imports: [
     BrowserModule,
     // NxModule.forRoot(),
-    RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+    RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     MaterialModule,
     CdkTableModule,
@@ -39,6 +45,7 @@ import { StartViewComponent } from './definyDate/start-view/start-view.component
     MatCheckboxModule,
     MatRadioModule,
     HttpClientModule
+    // AppRoutingModule
   ],
   exports: [MatCheckboxModule, MatRadioModule],
   providers: [MatDatepickerModule, DefinyInterval],

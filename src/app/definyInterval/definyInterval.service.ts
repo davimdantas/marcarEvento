@@ -8,27 +8,30 @@ import { Interval } from './interval.model';
 
 @Injectable({ providedIn: 'root' })
 export class DefinyInterval {
-  private changes: [NgbDate, NgbDate, string, string, number[]];
+  private intervalToShare;
   private intervalUpdated = new Subject();
-  private testingBackend = null;
-
   constructor(private http: HttpClient, public definyDate: DefinyDate) {}
+
   getIntervalUpdateListener() {
     return this.intervalUpdated.asObservable();
   }
 
   getChanges() {
     this.http.get('http://localhost:3000/api/interval').subscribe(postData => {
-      this.testingBackend = postData[3];
       this.intervalUpdated.next();
     });
+  }
+
+  getInterval() {
+    return this.intervalToShare;
   }
 
   addChanges(interval: Interval) {
     this.http.post('http://localhost:3000/api/interval', interval).subscribe(responseData => {
       console.log('\n', responseData);
       this.intervalUpdated.next(interval);
+      this.intervalToShare = interval;
     });
-    this.definyDate.getChanges();
+    this.definyDate.addChanges(interval);
   }
 }

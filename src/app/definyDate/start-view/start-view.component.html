@@ -1,4 +1,14 @@
-<!-- <mat-table [dataSource]="dataSource">
+<h1>Second View</h1>
+allowedDays <br />
+
+{{ allowedDays }} <br />
+firstHour <br />
+
+{{ firstHour }} <br />
+dates: <br />
+
+{{ dates }}
+<mat-table [dataSource]="dataSource">
   <ng-container *ngFor="let column of columnArray" [cdkColumnDef]="column.columnDef">
     <mat-header-cell *cdkHeaderCellDef>{{ column.header }}</mat-header-cell>
 
@@ -7,5 +17,4 @@
 
   <mat-header-row *matHeaderRowDef="generatedDays"></mat-header-row>
   <mat-row *matRowDef="let row; columns: generatedDays"></mat-row>
-</mat-table> -->
-<p>Testando</p>
+</mat-table>

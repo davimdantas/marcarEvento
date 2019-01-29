@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { DefinyInterval } from '../definyInterval.service';
 import { Interval } from '../interval.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-generate-calendar',
@@ -39,6 +40,10 @@ export class GenerateCalendarComponent implements OnInit, OnDestroy {
   allowedDays = [0, 1, 2, 3, 4, 5, 6];
   dates = [];
 
+  onLoadSecondPage() {
+    const sharing = this.definyInterval.getInterval();
+    this.router.navigate(['/startview']);
+  }
   getDates(startDate: Date, endDate: Date) {
     while (startDate <= endDate) {
       this.dates.push(new Date(startDate));
@@ -100,10 +105,6 @@ export class GenerateCalendarComponent implements OnInit, OnDestroy {
 
   // updateDays(changes: [NgbDate, NgbDate, string, string, number[]]) {
   updateDays(changes: Interval) {
-    // this.firstHour = this.timeStringToInt(changes[2]);
-    // this.lastHour = this.timeStringToInt(changes[3]);
-    // this.allowedDays = [];
-    // this.allowedDays = changes[4];
     this.firstHour = this.timeStringToInt(changes.firstHour);
     this.lastHour = this.timeStringToInt(changes.lastHour);
     this.allowedDays = [];
@@ -131,7 +132,7 @@ export class GenerateCalendarComponent implements OnInit, OnDestroy {
     return hours;
   }
 
-  constructor(public definyInterval: DefinyInterval) {}
+  constructor(public definyInterval: DefinyInterval, private router: Router) {}
 
   ngOnInit() {
     this.getDates(
@@ -143,7 +144,7 @@ export class GenerateCalendarComponent implements OnInit, OnDestroy {
     this.dataSource = this.daysForTable.pipe(map(v => Object.values(v)));
     this.intervalSub = this.definyInterval
       .getIntervalUpdateListener()
-      .subscribe((arrayThatCameFromService: [NgbDate, NgbDate, string, string, number[]]) => {
+      .subscribe((arrayThatCameFromService: Interval) => {
         this.updateDays(arrayThatCameFromService);
       });
   }
