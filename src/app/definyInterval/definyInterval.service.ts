@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Interval } from './interval.model';
 
 @Injectable({ providedIn: 'root' })
 export class DefinyInterval {
@@ -23,17 +24,10 @@ export class DefinyInterval {
     });
   }
 
-  addChanges(interval: [NgbDate, NgbDate, string, string, number[]]) {
-    const begginerDate = interval[0];
-    const endDate = interval[1];
-    const firsth = interval[2];
-    const lasth = interval[3];
-    const wdays = interval[4];
-    this.changes = [begginerDate, endDate, firsth, lasth, wdays];
-    // this.changes = [...interval];
-    this.http.post('http://localhost:3000/api/interval', this.changes).subscribe(responseData => {
+  addChanges(interval: Interval) {
+    this.http.post('http://localhost:3000/api/interval', interval).subscribe(responseData => {
       console.log('\n', responseData);
-      this.intervalUpdated.next(this.changes);
+      this.intervalUpdated.next(interval);
     });
     this.definyDate.getChanges();
   }

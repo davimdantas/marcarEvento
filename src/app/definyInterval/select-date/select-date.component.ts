@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { DefinyInterval } from '../definyInterval.service';
+import { Interval } from '../interval.model';
 
 @Component({
   selector: 'app-select-date',
@@ -11,6 +12,13 @@ export class SelectDateComponent implements OnInit {
   hoveredDate: NgbDate;
   fromDate: NgbDate;
   toDate: NgbDate;
+  intervalo: Interval = {
+    firstDay: null,
+    lastDay: null,
+    firstHour: '07:00',
+    lastHour: '17:00',
+    daysOfWeek: [0, 1, 2, 3, 4, 5, 6, 7]
+  };
 
   @Input() firstDay;
 
@@ -106,7 +114,12 @@ export class SelectDateComponent implements OnInit {
 
   updateDates() {
     this.gerarArrayDiasDasemana();
-    this.definyInterval.addChanges(this.dateArray);
+    this.intervalo.firstDay = this.dateArray[0];
+    this.intervalo.lastDay = this.dateArray[1];
+    this.intervalo.firstHour = this.dateArray[2];
+    this.intervalo.lastHour = this.dateArray[3];
+    this.intervalo.daysOfWeek = this.dateArray[4];
+    this.definyInterval.addChanges(this.intervalo);
   }
 
   ngOnInit() {

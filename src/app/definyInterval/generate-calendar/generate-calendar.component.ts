@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { DefinyInterval } from '../definyInterval.service';
+import { Interval } from '../interval.model';
 
 @Component({
   selector: 'app-generate-calendar',
@@ -96,18 +97,24 @@ export class GenerateCalendarComponent implements OnInit, OnDestroy {
   }
 
   // triggered by slect-date updateDates()
-  updateDays(changes: [NgbDate, NgbDate, string, string, number[]]) {
-    this.firstHour = this.timeStringToInt(changes[2]);
-    this.lastHour = this.timeStringToInt(changes[3]);
+
+  // updateDays(changes: [NgbDate, NgbDate, string, string, number[]]) {
+  updateDays(changes: Interval) {
+    // this.firstHour = this.timeStringToInt(changes[2]);
+    // this.lastHour = this.timeStringToInt(changes[3]);
+    // this.allowedDays = [];
+    // this.allowedDays = changes[4];
+    this.firstHour = this.timeStringToInt(changes.firstHour);
+    this.lastHour = this.timeStringToInt(changes.lastHour);
     this.allowedDays = [];
-    this.allowedDays = changes[4];
+    this.allowedDays = changes.daysOfWeek;
     this.dates = [];
     this.columnArray = [];
     this.calendarArray = [];
     this.generatedDays = [];
     this.getDates(
-      new Date(changes[0].year, changes[0].month - 1, changes[0].day),
-      new Date(changes[1].year, changes[1].month - 1, changes[1].day)
+      new Date(changes.firstDay.year, changes.firstDay.month - 1, changes.firstDay.day),
+      new Date(changes.lastDay.year, changes.lastDay.month - 1, changes.lastDay.day)
     );
     this.daysForTable = new BehaviorSubject(this.calendarArray);
 
