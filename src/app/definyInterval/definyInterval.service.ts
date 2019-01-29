@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { DefinyDate } from '../definyDate/definyDate.service';
 
 @Injectable({ providedIn: 'root' })
 export class DefinyInterval {

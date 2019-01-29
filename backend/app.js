@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const intervalChanges = [];
+let intervalChanges = [];
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -16,9 +16,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/api/interval', (req, res, next) => {
   const changes = req.body;
-  console.log('\n', changes);
-  this.intervalChanges = [...changes];
-  console.log('\n interval: ', this.intervalChanges);
+  console.log('\n Post changes: ', changes);
+  intervalChanges = [...changes];
+  console.log('\n Post interval: ', intervalChanges);
 
   res.status(201).json({
     message: 'Change saved'
@@ -26,9 +26,19 @@ app.post('/api/interval', (req, res, next) => {
 });
 
 app.use('/api/interval', (req, res, next) => {
-  const changes = [new Date(), new Date() + 10, '10:00', '12:00', [1, 3, 5]];
-  res.json('Changes fetched succesfully!');
-  console.log('\n No back ', this.intervalChanges);
+  if (intervalChanges.length > 0) {
+    const changes = {
+      firstday: intervalChanges[0],
+      lastday: intervalChanges[1],
+      firsthour: intervalChanges[2],
+      lasthour: intervalChanges[3],
+      weekday: intervalChanges[4]
+    };
+    res.json(changes);
+  } else {
+    console.log('\n No back ', intervalChanges);
+    res.json('Changes not made yet');
+  }
 });
 
 module.exports = app;
