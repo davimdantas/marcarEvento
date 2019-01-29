@@ -22,8 +22,13 @@ export class DefinyInterval {
     });
   }
 
+//apagar
   getInterval() {
     return this.intervalToShare;
+  }
+//apagar
+  changeDefinyDate(change) {
+    this.definyDate.
   }
 
   addChanges(interval: Interval) {
