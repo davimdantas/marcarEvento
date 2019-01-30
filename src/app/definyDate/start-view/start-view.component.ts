@@ -14,13 +14,14 @@ export class StartViewComponent implements OnInit, OnDestroy {
 
   infoInterval;
 
+  objectFromServer;
+
   months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   generatedDays = [];
   calendarArray = [];
   columnArray = [];
   allowedDays = [0, 1, 2, 3, 4, 5, 6];
   dates = [];
-
   daysForTable = new BehaviorSubject(this.calendarArray);
   firstHour = 7;
   lastHour = 18;
@@ -77,7 +78,7 @@ export class StartViewComponent implements OnInit, OnDestroy {
   }
 
   updateDays(changes) {
-    console.log('\n Start View ngOnInit infoInterval: ', changes);
+    // console.log('\n Start View ngOnInit infoInterval: ', changes);
 
     this.firstHour = this.timeStringToInt(changes.firstHour);
     this.lastHour = this.timeStringToInt(changes.lastHour);
@@ -116,12 +117,18 @@ export class StartViewComponent implements OnInit, OnDestroy {
   constructor(public definyDate: DefinyDate) {}
 
   ngOnInit() {
+    // this.objectFromServer = this.definyDate.getChanges();
     this.intervalSub = this.definyDate
       .getIntervalUpdateListener()
       .subscribe(objectThatFromService => {
-        this.infoInterval = objectThatFromService;
-        this.updateDays(this.infoInterval);
+        if (objectThatFromService !== undefined) {
+          this.updateDays(objectThatFromService);
+        }
       });
+    this.definyDate.getChanges().subscribe(serverData => {
+      this.objectFromServer = serverData;
+      //   console.log('\n getChanges teste: ', postData);
+    });
   }
 
   ngOnDestroy() {

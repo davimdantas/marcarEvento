@@ -1,4 +1,4 @@
-<h1>Second View</h1>
+<!-- <h1>Second View</h1>
 allowedDays <br />
 
 {{ allowedDays }} <br />
@@ -7,7 +7,13 @@ firstHour <br />
 {{ firstHour }} <br />
 dates: <br />
 
-{{ dates }}
+{{ dates }} -->
+<br />
+<p>Teste 1:</p>
+<br />
+{{ teste1 | json }} <br />
+
+<h2>Second View</h2>
 <mat-table [dataSource]="dataSource">
   <ng-container *ngFor="let column of columnArray" [cdkColumnDef]="column.columnDef">
     <mat-header-cell *cdkHeaderCellDef>{{ column.header }}</mat-header-cell>

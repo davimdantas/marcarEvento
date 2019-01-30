@@ -27,9 +27,9 @@ export class DefinyInterval {
     return this.intervalToShare;
   }
 //apagar
-  changeDefinyDate(change) {
-    this.definyDate.
-  }
+  // changeDefinyDate(change) {
+  //   this.definyDate.
+  // }
 
   addChanges(interval: Interval) {
     this.http.post('http://localhost:3000/api/interval', interval).subscribe(responseData => {
