@@ -21,9 +21,13 @@ app.post('/api/interval', (req, res, next) => {
   });
 });
 
-app.get('/startview', function (req, res, next) {
-	res.send(intervalChanges)
-}) 
+app.get('/startview', function(req, res, next) {
+  res.send(intervalChanges);
+});
+
+app.get('/api/interval', function(req, res, next) {
+  res.send(intervalChanges);
+});
 
 app.use('/api/interval', (req, res, next) => {
   res.json(intervalChanges);

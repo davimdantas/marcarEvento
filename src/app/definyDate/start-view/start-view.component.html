@@ -9,9 +9,9 @@ dates: <br />
 
 {{ dates }} -->
 <br />
-<p>Teste 1:</p>
+<!-- <p>objectFromServer :</p>
 <br />
-{{ teste1 | json }} <br />
+{{ objectFromServer | json }} <br /> -->
 
 <h2>Second View</h2>
 <mat-table [dataSource]="dataSource">
@@ -24,3 +24,5 @@ dates: <br />
   <mat-header-row *matHeaderRowDef="generatedDays"></mat-header-row>
   <mat-row *matRowDef="let row; columns: generatedDays"></mat-row>
 </mat-table>
+
+<button mat-raised-button (click)="updateDates()">Enviar mudanças</button>
