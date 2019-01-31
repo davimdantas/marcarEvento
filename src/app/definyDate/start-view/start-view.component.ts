@@ -10,13 +10,7 @@ import { getDefaultService } from 'selenium-webdriver/opera';
   templateUrl: './start-view.component.html',
   styleUrls: ['./start-view.component.css']
 })
-export class StartViewComponent implements OnInit, OnDestroy {
-  private intervalSub: Subscription;
-
-  infoInterval;
-
-  apagar;
-
+export class StartViewComponent implements OnInit {
   objectFromServer;
 
   months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
@@ -31,7 +25,6 @@ export class StartViewComponent implements OnInit, OnDestroy {
   dataSource: Observable<any[]>;
 
   calendarGenerator(fHour: number, lHour: number) {
-    console.log('\n fhour', fHour);
     const newObj = {};
     for (const eachday in this.dates) {
       if (this.dates.hasOwnProperty(eachday)) {
@@ -80,33 +73,7 @@ export class StartViewComponent implements OnInit, OnDestroy {
       this.calendarArray.push(newObj2);
     }
   }
-
-  updateDays(changes) {
-    // console.log('\n Start View ngOnInit infoInterval: ', changes);
-
-    this.firstHour = this.timeStringToInt(changes.firstHour);
-    this.lastHour = this.timeStringToInt(changes.lastHour);
-    this.allowedDays = [];
-    this.allowedDays = changes.daysOfWeek;
-    this.dates = [];
-    this.columnArray = [];
-    this.calendarArray = [];
-    this.generatedDays = [];
-    this.getDates(
-      new Date(changes.firstDay.year, changes.firstDay.month - 1, changes.firstDay.day),
-      new Date(changes.lastDay.year, changes.lastDay.month - 1, changes.lastDay.day)
-    );
-    this.daysForTable = new BehaviorSubject(this.calendarArray);
-
-    this.calendarGenerator(this.firstHour, this.lastHour);
-
-    this.columnArray.map(day => this.generatedDays.push(day.columnDef));
-
-    this.dataSource = this.daysForTable.pipe(map(v => Object.values(v)));
-  }
-
   timeStringToInt(time: string): number {
-    console.log('\n Time: ', time);
     const hoursMinutes = time.split(/[.:]/);
     const hours = parseInt(hoursMinutes[0], 10);
     return hours;
@@ -119,14 +86,10 @@ export class StartViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  logData() {
-    console.log('\n this.objectFromServer: ', this.objectFromServer);
-  }
 
-  async updateDates() {
-    this.definyDate.getChanges().subscribe(async response => {
-      this.objectFromServer = await response;
-      console.log('\n this.objectFromServer: ', this.objectFromServer);
+  updateDates() {
+    this.definyDate.getChanges().subscribe( response => {
+      this.objectFromServer =  response;
       this.firstHour = this.timeStringToInt(this.objectFromServer.firstHour);
       this.lastHour = this.timeStringToInt(this.objectFromServer.lastHour);
       this.allowedDays = [];
@@ -148,70 +111,10 @@ export class StartViewComponent implements OnInit, OnDestroy {
       this.dataSource = this.daysForTable.pipe(map(v => Object.values(v)));
     });
   }
-
-  // async updateDates() {
-  //   const teste = this.definyDate
-  //     .getChanges()
-  //     .subscribe(async response => (this.objectFromServer = await response));
-  //   const result = await teste;
-  //   this.objectFromServer = result;
-  //   console.log('\n this.objectFromServer: ', this.objectFromServer);
-  // }
-
-  // async updateDates() {
-  //   this.definyDate.getChanges();
-  // }
-
-  //   async updateDates() {
-  //   this.definyDate
-  //     .getChanges()
-  //     .subscribe(async response => (this.objectFromServer = await response));
-  // }
-
-  // async upadteA() {
-  //   await this.definyDate.getChanges().subscribe(serverData => {
-  //     this.objectFromServer = serverData;
-  //   });
-  // }
-
   constructor(public definyDate: DefinyDate) {}
 
   async ngOnInit() {
     this.updateDates();
-    // await this.updateDates();
-    // await this.logData();
-    // this.objectFromServer = this.definyDate.getChanges();
-    // this.intervalSub = this.definyDate
-    //   .getIntervalUpdateListener()
-    //   .subscribe(objectThatFromService => {
-    //     if (objectThatFromService !== undefined) {
-    //       this.updateDays(objectThatFromService);
-    //     }
-    //   });
-    // //---------------------------------------
-    // this.objectFromServer = await this.definyDate.getChanges();
-    // this.firstHour = this.timeStringToInt(this.objectFromServer.firstHour);
-    // this.lastHour = this.timeStringToInt(this.objectFromServer.lastHour);
-    // this.allowedDays = [];
-    // this.allowedDays = this.objectFromServer.daysOfWeek;
-    // this.getDates(
-    //   new Date(
-    //     this.objectFromServer.firstDay.year,
-    //     this.objectFromServer.firstDay.month - 1,
-    //     this.objectFromServer.firstDay.day
-    //   ),
-    //   new Date(
-    //     this.objectFromServer.lastDay.year,
-    //     this.objectFromServer.lastDay.month - 1,
-    //     this.objectFromServer.lastDay.day
-    //   )
-    // );
-    // this.calendarGenerator(this.firstHour, this.lastHour);
-    // this.columnArray.map(day => this.generatedDays.push(day.columnDef));
-    // this.dataSource = this.daysForTable.pipe(map(v => Object.values(v)));
   }
 
-  ngOnDestroy() {
-    // this.intervalSub.unsubscribe();
-  }
 }

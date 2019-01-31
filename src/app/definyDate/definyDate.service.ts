@@ -20,29 +20,9 @@ export class DefinyDate {
     return this.intervalUpdated.asObservable();
   }
 
-  // async getChanges() {
-  //   console.log('\n start ');
-  //   return await this.http.get('http://localhost:3000/api/interval');
-  // }
-
-  // getChanges() {
-  //   let teste;
-  //   this.http.get('http://localhost:3000/api/interval').subscribe(async (response) => teste = await response);
-  //   return teste;
-  // }
-
   getChanges() {
     return this.http.get('http://localhost:3000/api/interval');
   }
-
-  // getChanges() {
-  //   this.http.get('http://localhost:3000/api/interval').subscribe(postData => {
-  //     const teste = postData;
-  //     this.intervalUpdated.next();
-  //     console.log('\n getChanges teste: ', teste);
-  //     return postData;
-  //   });
-  // }
 
   addChanges(interval) {
     this.intervalUpdated.next(interval);
