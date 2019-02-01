@@ -3,9 +3,23 @@
   <ng-container *ngFor="let column of columnArray" [cdkColumnDef]="column.columnDef">
     <mat-header-cell *cdkHeaderCellDef>{{ column.header }}</mat-header-cell>
 
-    <mat-cell *matCellDef="let day">{{ column.cell(day) }}</mat-cell>
+    <!-- <mat-cell
+      *matCellDef="let cell"
+      (click)="onDateSelection($event)"
+      [ngClass]="{ hovered: cell.hovered, highlighted: cell.highlighted }"
+      (click)="cell.highlighted = !cell.highlighted"
+      [ngClass]="column.cell(cell) === firstClick.hourString ? 'highlighted' : 'hovered'"
+      (mouseover)="cell.hovered = true"
+      (mouseout)="cell.hovered = false"
+      >{{ column.cell(cell) }}</mat-cell
+    > -->
+    <mat-cell *matCellDef="let cell" (click)="onDateSelection($event)">{{
+      column.cell(cell)
+    }}</mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="generatedDays"></mat-header-row>
   <mat-row *matRowDef="let row; columns: generatedDays"></mat-row>
 </mat-table>
+
+<div class="teste"><p>Testando</p></div>

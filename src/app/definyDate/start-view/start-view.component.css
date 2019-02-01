@@ -1,0 +1,40 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body {
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
+}
+
+.basic-container {
+  padding: 5px;
+}
+
+.version-info {
+  font-size: 8pt;
+  float: right;
+}
+
+.mat-cell.hovered {
+  background: rgba(2, 117, 216, 0.5);
+}
+
+.mat-cell.highlighted {
+  background: #0275d8;
+}
+
+.highlighted {
+  background: #0275d8;
+}
+
+.hovered {
+  background: rgba(2, 117, 216, 0.5);
+}
+
+/*
+  This is a work around for checkbox bug in material cell
+  https://github.com/angular/material2/issues/8600
+*/
+/* mat-cell.mat-cell,
+mat-header-cell.mat-header-cell {
+  overflow: visible;
+} */
